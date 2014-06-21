@@ -1,0 +1,46 @@
+[
+    {
+        "context" : "simple test",
+        "nameSpace" : "XM",
+        "type" : "SimpleModel",
+        "table" : "smpl.table1",
+        "idSequenceName" : "smpl.table1_table1_id_seq",
+        "locakable": true,
+        "comment" : "Simple Model for ORM Testing",
+        "privilages" : {
+            "all" : {
+                "create" : true,
+                "read" : true,
+                "update" : true,
+                "delete" : true
+            }
+        },
+        "properties" : [
+            {
+                "name" : "id",
+                "attr" : {
+                    "type" : "Number",
+                    "column" : "table1_id",
+                    "isPrimaryKey" : true
+                }
+            },
+            {
+                "name" : "name",
+                "attr" : {
+                    "type" : "String",
+                    "column" : "table1_name",
+                    "isNaturalKey" : true
+                }
+            },
+            {
+                "name" : "description",
+                "attr" : {
+                    "type" : "String",
+                    "column" : "table1_description"
+                }
+            }
+        ],
+        "isSystem" : false,
+        "isRest" : true
+    }
+]
