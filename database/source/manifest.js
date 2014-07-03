@@ -1,5 +1,5 @@
 {
-  "name" : "simple_orm",
+  "name" : "sample-xcore-extension",
   "version" : "0.0.1",
   "comment" : "Simple Test Extension",
   "loadOrder" : 999,
