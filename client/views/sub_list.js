@@ -1,33 +1,43 @@
 enyo.kind({
-  name: "XV.SampleExtensionSubNav",
-  kind: "List",
+  name: "XV.SampleExtensionSubNav",  
+  kind: "enyo.DataList",
   classes: "extension-sub-list",
   fit: true,
   handlers: {
-    onSetupItem: "setupItem"
+    ontap: "subListItemTap"
+  },
+  events: {
+    onSubListSelect: ""
+  },
+  published: {
+    collection: null
   },
   components: [
-    {name: "sampleExtensionSubListItem", classes: "item", ontap: "sampleExtensionSubListItemTap", components: [
-    ]}
+    {components: [
+      {name: "item", classes: "item"}
+    ],
+     bindings: [
+       {from: ".model.name", to: ".$.item.content"}
+     ]}
   ],
-  data: [],
-  create: function () {
-    this.inherited(arguments);
-    this.data = [];
-    
-    for(var i=0;i<10; i++){
-      this.data.push("Link " + i);
-    }
-    this.setCount(this.data.length);
+  create: enyo.inherit(function (sup) {
+    return function () {
+      this.collection = new enyo.Collection(this.data);
+      sup.apply(this, arguments);
+    };
+  }),
+  subListItemTap: function(inSender, inEvent) {
+    this.doSubListSelect(inEvent.originator.content);
   },
-  setupItem: function (inSender, inEvent) {
-    this.inherited(arguments);
-
-    var i = inEvent.index;
-    this.$.sampleExtensionSubListItem.setContent(this.data[i]);
-    this.$.sampleExtensionSubListItem.addRemoveClass("selected", this.isSelected(i));    
-  },
-  sampleExtensionSubListItemTap: function(inSender, inEvent) {
-    console.log( 'We Side Bar' );
-  }
+  data: [
+    {name: "Link 01"},
+    {name: "Link 02"},
+    {name: "Link 03"},
+    {name: "Link 04"},
+    {name: "Link 05"},
+    {name: "Link 06"},
+    {name: "Link 07"},
+    {name: "Link 08"},
+    {name: "Link 09"}
+  ]
 });
