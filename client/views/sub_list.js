@@ -3,14 +3,12 @@ enyo.kind({
   kind: "enyo.DataList",
   classes: "extension-sub-list",
   fit: true,
+  allowTransitions: false,
   handlers: {
     ontap: "subListItemTap"
   },
   events: {
     onSubListSelect: ""
-  },
-  published: {
-    collection: null
   },
   components: [
     {components: [
@@ -22,22 +20,32 @@ enyo.kind({
   ],
   create: enyo.inherit(function (sup) {
     return function () {
-      this.collection = new enyo.Collection(this.data);
+      this.collection = new XM.SampleModelCollection(this.data);
       sup.apply(this, arguments);
     };
   }),
+  rendered: function() {
+    var that = this;
+    this.inherited(arguments);
+    setTimeout(function(){that.select(0);},1000);
+  },
   subListItemTap: function(inSender, inEvent) {
-    this.doSubListSelect(inEvent.originator.content);
+    if(inEvent.model === this.selected()){
+      this.doSubListSelect(inEvent.originator.content);
+    }
+    if(inEvent.originator.content){
+      this.select(inEvent.index);
+    }
   },
   data: [
-    {name: "Link 01"},
-    {name: "Link 02"},
-    {name: "Link 03"},
-    {name: "Link 04"},
-    {name: "Link 05"},
-    {name: "Link 06"},
-    {name: "Link 07"},
-    {name: "Link 08"},
-    {name: "Link 09"}
+    new XM.SampleModel({name: "Link 01"}),
+    new XM.SampleModel({name: "Link 02"})
+    // new XM.SampleModel({name: "Link 03"}),
+    // new XM.SampleModel({name: "Link 04"}),
+    // new XM.SampleModel({name: "Link 05"}),
+    // new XM.SampleModel({name: "Link 06"}),
+    // new XM.SampleModel({name: "Link 07"}),
+    // new XM.SampleModel({name: "Link 08"}),
+    // new XM.SampleModel({name: "Link 09"})
   ]
 });

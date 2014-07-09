@@ -1,1 +1,3 @@
-enyo.depends();
+enyo.depends(
+  "sample_model.js"
+);
