@@ -4,7 +4,7 @@ enyo.kind({
     onSubListSelect: ""
   },
   components: [
-    {name: "repeater", kind: "enyo.DataList", classes: "extension-sub-list", fit: true, allowTransitions: false, renderDelay: null, components: [
+    {name: "list", kind: "enyo.DataList", classes: "extension-sub-list", fit: true, allowTransitions: false, renderDelay: null, components: [
       {components: [
         {name: "item", classes: "item",ontap: "subListItemTap"}
       ],
@@ -15,7 +15,7 @@ enyo.kind({
     ]}
   ],
   bindings: [
-    {from: ".collection", to: ".$.repeater.collection"}
+    {from: ".collection", to: ".$.list.collection"}
   ],
   data: [
     new XM.SampleModel({name: "Link 01"}),
@@ -29,11 +29,11 @@ enyo.kind({
   }),
   rendered: function() {
     this.inherited(arguments);
-    this.$.repeater.select(0);
-    this.doSubListSelect(this.$.repeater.selected().get("name"));
+    this.$.list.select(0);
+    this.doSubListSelect(this.$.list.selected().get("name"));
   },
   subListItemTap: function(inSender, inEvent) {
     this.doSubListSelect(inEvent.originator.name);
-    this.$.repeater.select(inEvent.index);
+    this.$.list.select(inEvent.index);
   }
 });
