@@ -2,6 +2,8 @@ enyo.kind({
   name: "XV.SampleExtensionWorkspace", 
   kind: "enyo.DataList",
   fit: true,
+  allowTransitions: false,
+  renderDelay: null,
   components: [
     {classes: "item-holder", components: [
       {name: "item"},
@@ -21,6 +23,10 @@ enyo.kind({
     };
   }),
   data: [
-    new XM.SampleModel({name: "This is a test workspace", name2: "This is a test workspace", name3: "This is a test workspace"})
+    new XM.SampleModel({
+      name: "This is a test workspace", 
+      name2: "This is a test workspace", 
+      name3: "This is a test workspace"
+    })
   ]
 });
