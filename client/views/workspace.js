@@ -37,7 +37,7 @@ enyo.kind({
     };
   }),
   testAlert: function(inSender, inEvent) {
-    alert = {content: 'warning', type: 'warning'};
+    alert = {title: "Success:", content: 'info has been saved', type: 'success'};
     this.doAlert(alert);
   }
 });
