@@ -1,39 +1,36 @@
 enyo.kind({
-  name: "XV.SampleExtensionSubNav",  
+  name: 'XV.SampleExtensionSublist',
+  // classes: "enyo-unselectable enyo-fit",
   events: {
+    onNodeTap: "nodeTap",
+    onExpand: "nodeExpand",
     onSubListSelect: ""
   },
   components: [
-    {name: "list", kind: "enyo.DataList", classes: "extension-sub-list", fit: true, allowTransitions: false, renderDelay: null, components: [
-      {components: [
-        {name: "item", classes: "item",ontap: "subListItemTap"}
-      ],
-       bindings: [
-         {from: ".model.name", to: ".$.item.content"},
-         {from: ".model.name", to: ".$.item.name"}
-       ], ontap: "subListItemTap"}
+    {kind: "Selection", onSelect: "select", onDeselect: "deselect"},
+    {kind: "Scroller", classes: "extension-sub-list", fit: true, components: [
+      {kind: "Node", content: "Test1", expandable: true, components: [
+        { content: "Test Sub", name: "TestSub", workspace: {name: "Test", kind: "XV.SampleExtensionWorkspace"} },
+        {content: "Delta", expandable: true, expanded: false, components: [
+          { content: "Test Sub2", name: "TestSub2", workspace: {name: "Test2", kind: "XV.SampleExtensionWorkspace"} }
+        ]},
+      ]}
     ]}
   ],
-  bindings: [
-    {from: ".collection", to: ".$.list.collection"}
-  ],
-  data: [
-    new XM.SampleModel({name: "Link 01"}),
-    new XM.SampleModel({name: "Link 02"})
-  ],
-  create: enyo.inherit(function (sup) {
-    return function () {
-      this.collection = new XM.SampleModelCollection(this.data);
-      sup.apply(this, arguments);
-    };
-  }),
-  rendered: function() {
-    this.inherited(arguments);
-    this.$.list.select(0);
-    this.doSubListSelect(this.$.list.selected().get("name"));
+  nodeExpand: function(inSender, inEvent) {
+    console.log('expanding');
   },
-  subListItemTap: function(inSender, inEvent) {
-    this.doSubListSelect(inEvent.originator.name);
-    this.$.list.select(inEvent.index);
+  nodeTap: function(inSender, inEvent) {
+    var node = inEvent.originator;
+    this.$.selection.select(node.id, node);
+    if(node.workspace){
+      this.doSubListSelect(node.workspace);
+    }
+  },
+  select: function(inSender, inEvent) {
+    inEvent.data.addClass('selected');
+  },
+  deselect: function(inSender, inEvent) {
+    inEvent.data.removeClass('selected');
   }
 });
